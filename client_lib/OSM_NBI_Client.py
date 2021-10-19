@@ -3,6 +3,9 @@ import http.client
 import json
 import yaml
 
+from  client_lib import OSM_NBI_Client_admin as admin_client
+
+
 class Configuration:
     def __init__(self):
         self.host = "10.10.10.84"
@@ -44,35 +47,6 @@ class ApiRequest():
             print(exc)
             return None
 
-
-
-class Admin:
-    def __init__(self,configuration ):
-        self.configuration = configuration
-        self.headers=None
-        self.main_topic=None
-        self.topic=None
-        self.payload=None
-        self.ApiReq=None
-
-    
-    def requestNewToken(self):
-        #TODO: check forconnectivity
-        gen_api=GenericApi("admin","tokens","POST",{
-        'Content-Type': 'application/json'
-        })
-        self.main_topic=gen_api.main_topic
-        self.headers= gen_api.headers
-        self.topic=gen_api.topic
-        self.action=gen_api.action  
-        self.ApiReq= ApiRequest(self.configuration,self.headers)
-
-        if self.headers is None:
-            print("Ooops")
-            return None
-        pprint("Request New Token")
-        self.payload="{\"username\": \""+ self.configuration.username+"\",  \"password\": \""+self.configuration.password+"\"}"
-        return (self.ApiReq.send_request("POST",self.main_topic,self.topic,self.payload) )
 
 
 
