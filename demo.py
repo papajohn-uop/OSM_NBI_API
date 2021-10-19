@@ -27,10 +27,7 @@ except Exception as e:
 
 try:
     # Get NSDs
-    gen_API=OSM_NBI_Client.api_help.GenericApi("nsd","ns_descriptors","GET",{
-                                'Authorization': 'Bearer ' + config.token 
-                                })
-    NBI_nsd_client =OSM_NBI_Client.nsd_client.NSD(config,gen_API)
+    NBI_nsd_client =OSM_NBI_Client.nsd_client.NSD(config)
 
     response = NBI_nsd_client.getNSDs()
     # print(response)
