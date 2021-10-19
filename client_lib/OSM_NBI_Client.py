@@ -5,11 +5,11 @@ import yaml
 
 class Configuration:
     def __init__(self):
-        self.host = "xx.xx.xx.xx"
+        self.host = "10.10.10.84"
         # Username for HTTP basic authentication
-        self.username = "username"
+        self.username = "papajohn"
         # Password for HTTP basic authentication
-        self.password = "password"
+        self.password = "P@paj0hn"
         #Version
         self.version="v1"
         #authorization token
@@ -35,32 +35,38 @@ class ApiRequest():
         self.conn.request(action, "/osm/"+main_topic+"/"+self.configuration.version+"/" + topic, payload, self.headers)
         res = self.conn.getresponse()
         data = res.read()
-    #    print(data.decode("utf-8"))
-#        responseObject = json.loads(data)
+
         try:
             resp_yaml=yaml.safe_load(data)
-           # print(resp_yaml)
+
             return resp_yaml
         except yaml.YAMLError as exc:
             print(exc)
             return None
-     #   print(data.decode())
-        #return data.decode("utf-8")
+
 
 
 class Admin:
-    def __init__(self,configuration, gen_api:GenericApi):
+    def __init__(self,configuration ):
         self.configuration = configuration
+        self.headers=None
+        self.main_topic=None
+        self.topic=None
+        self.payload=None
+        self.ApiReq=None
+
+    
+    def requestNewToken(self):
+        #TODO: check forconnectivity
+        gen_api=GenericApi("admin","tokens","POST",{
+        'Content-Type': 'application/json'
+        })
         self.main_topic=gen_api.main_topic
         self.headers= gen_api.headers
         self.topic=gen_api.topic
         self.action=gen_api.action  
-        self.payload=None
-        self.ApiReq= ApiRequest(configuration,self.headers)
+        self.ApiReq= ApiRequest(self.configuration,self.headers)
 
-    
-    def requestNewToken(self):
-        #TODO
         if self.headers is None:
             print("Ooops")
             return None
@@ -99,60 +105,3 @@ class NSD:
 
 
 
-
-
-# config=Configuration()
-# gen_API=GenericApi("admin","tokens","POST",{
-#         'Content-Type': 'application/json'
-#         })
-# NBI_admin_client =Admin(config,gen_API)
-
-
-# try:
-#     # Request a new Token
-#     response = NBI_admin_client.requestNewToken()
-# #    print(response)
-# #    print(response["id"])
-#     config.token=response["id"]
-#     print(config.token)
-# except Exception as e:
-#     print("Exception when calling Admin->requestNewToken: %s\n" % e)
-
-# try:
-#     # Get NSDs
-#     gen_API=GenericApi("nsd","ns_descriptors","GET",{
-#                                 'Authorization': 'Bearer ' + config.token 
-#                                 })
-#     NBI_nsd_client =NSD(config,gen_API)
-
-#     response = NBI_nsd_client.getNSDs()
-#     print(response)
-#     print("*************")
-#     pprint(response[0])
-#     print("*************")
-#     pprint(response[0]["description"])
-#     print("*************")
-#     pprint(response[0]["id"])
-#     print("*************")
-#     pprint(response[0]["name"])
-# except Exception as e:
-#     print("Exception when calling NSD->getNSDs: %s\n" % e)
-
-
-
-# # try:
-# #     # Get NSDs
-# #     NBI_nsd_client =NSD(config)
-
-# #     response = NBI_nsd_client.getNSDs()
-# #     print(response)
-# #     print("*************")
-# #     pprint(response[0])
-# #     print("*************")
-# #     pprint(response[0]["description"])
-# #     print("*************")
-# #     pprint(response[0]["id"])
-# #     print("*************")
-# #     pprint(response[0]["name"])
-# # except Exception as e:
-# #     print("Exception when calling NSD->getNSDs: %s\n" % e)
