@@ -9,11 +9,11 @@ from  client_lib import api_helper as api_help
 
 class Configuration:
     def __init__(self):
-        self.host = "10.10.10.84"
+        self.host = "xx.xx.xx.xx"
         # Username for HTTP basic authentication
-        self.username = "papajohn"
+        self.username = "username"
         # Password for HTTP basic authentication
-        self.password = "P@paj0hn"
+        self.password = "password"
         #Version
         self.version="v1"
         #authorization token
