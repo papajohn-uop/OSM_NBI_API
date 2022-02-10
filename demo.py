@@ -5,6 +5,9 @@ import yaml
 
 import client_lib.OSM_NBI_Client as OSM_NBI_Client
 
+import client_lib.OSM_NBI_Client_admin as OSM_NBI_Client_admin
+import client_lib.OSM_NBI_Client_nsd as OSM_NBI_Client_nsd
+
 
 
 
@@ -26,10 +29,8 @@ def OSM_TEST():
     if (get_token(config)):
         try:
             # Get NSDs
-            gen_API=OSM_NBI_Client.GenericApi("nsd","ns_descriptors","GET",{
-                                        'Authorization': 'Bearer ' + config.token 
-                                        })
-            NBI_nsd_client =OSM_NBI_Client.NSD(config,gen_API)
+
+            NBI_nsd_client =OSM_NBI_Client_nsd.NSD(config)
 
             response = NBI_nsd_client.getNSDs()
         
@@ -46,10 +47,8 @@ def OSM_TEST():
 
 def get_token(config):
    
-    gen_API=OSM_NBI_Client.GenericApi("admin","tokens","POST",{
-        'Content-Type': 'application/json'
-        })
-    NBI_admin_client =OSM_NBI_Client.Admin(config,gen_API)
+
+    NBI_admin_client =OSM_NBI_Client_admin.Admin(config)
 
 
     try:
