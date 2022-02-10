@@ -6,7 +6,6 @@ import yaml
 
 from  client_lib import api_helper as api_help 
 
-
 class Admin:
     def __init__(self,configuration ):
         self.configuration = configuration
