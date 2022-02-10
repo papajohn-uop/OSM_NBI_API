@@ -16,7 +16,7 @@ class Admin:
         self.ApiReq=None
 
     
-    def requestNewToken(self):
+    def __requestNewToken__(self):
         #TODO: check forconnectivity
         gen_api=api_help.GenericApi("admin","tokens","POST",{
         'Content-Type': 'application/json'
@@ -26,7 +26,6 @@ class Admin:
         self.topic=gen_api.topic
         self.action=gen_api.action  
         self.ApiReq= api_help.ApiRequest(self.configuration,self.headers)
-
         if self.headers is None:
             print("Ooops")
             return None
@@ -34,4 +33,13 @@ class Admin:
         self.payload="{\"username\": \""+ self.configuration.username+"\",  \"password\": \""+self.configuration.password+"\"}"
         return (self.ApiReq.send_request("POST",self.main_topic,self.topic,self.payload) )
 
-
+    def requestNewToken(self):
+        try:
+        # Request a new Token
+            response = self.__requestNewToken__()
+            self.configuration.token=response["id"]
+        except Exception as e:
+            print("Exception when calling Admin->requestNewToken: %s\n" % e)
+            return False
+        return True
+        return(self.__requestNewToken__())
