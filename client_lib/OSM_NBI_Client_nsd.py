@@ -1,3 +1,4 @@
+from curses import reset_prog_mode
 from pprint import pprint
 import http.client
 import json
@@ -18,7 +19,7 @@ class NSD:
         self.ApiReq= None
 
 
-    def getNSDs(self):
+    def __getNSDs__(self):
         gen_api=api_help.GenericApi("nsd","ns_descriptors","GET",{
                                 'Authorization': 'Bearer ' + self.configuration.token 
                                 })
@@ -40,8 +41,15 @@ class NSD:
 
         return (self.ApiReq.send_request("GET",self.main_topic,self.topic,self.payload) )
 
+    def getNSDs(self):
+        try:
+            # Get NSDs
+            response = self.__getNSDs__()
+        except Exception as e:
+            print("Exception when calling NSD->getNSDs: %s\n" % e)
+            return None
 
 
-
+        return response
 
 
