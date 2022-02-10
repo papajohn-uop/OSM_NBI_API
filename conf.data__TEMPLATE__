@@ -1,0 +1,6 @@
+{
+    "host":"YOUR_OSM_HOST",
+    "username":"YOUR_USER_NAME",
+    "password":"YOUR_PASSWORD",
+    "version":"OSM_API_VERSION"
+}
