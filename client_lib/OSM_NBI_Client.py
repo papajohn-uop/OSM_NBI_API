@@ -4,6 +4,7 @@ import json
 import yaml
 
 from  client_lib import OSM_NBI_Client_admin as admin 
+from  client_lib import OSM_NBI_Client_nsd as nsd 
 
 
 class Configuration:
@@ -25,14 +26,13 @@ class Configuration:
 
 
 class Client:
-    def __init__(self,conf:Configuration,confFile):
-        self.confd = conf
+    def __init__(self,confFile):
         self.conf=self.__readConf__(confFile) 
         self.admin=admin.Admin(self.conf)
+        self.nsd=nsd.NSD(self.conf)
 
     
     def __readConf__(self,confFile):
-        print("READ")
         conf_data=None
         config=None
         try:
