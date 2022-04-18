@@ -1,10 +1,7 @@
-from pprint import pprint
-import http.client
 import json
-import yaml
 
-from  client_lib import OSM_NBI_Client_admin as admin 
-from  client_lib import OSM_NBI_Client_nsd as nsd 
+from  client_lib.topics import OSM_NBI_Client_admin as admin 
+from  client_lib.topics import OSM_NBI_Client_nsd as nsd 
 
 
 class Configuration:

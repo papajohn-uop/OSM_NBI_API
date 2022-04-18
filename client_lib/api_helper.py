@@ -22,6 +22,7 @@ class ApiRequest():
        
     def send_request(self,action,main_topic, topic,payload):
         self.conn.request(action, "/osm/"+main_topic+"/"+self.configuration.version+"/" + topic, payload, self.headers)
+        print(action, "/osm/"+main_topic+"/"+self.configuration.version+"/" + topic, payload, self.headers)
         res = self.conn.getresponse()
         data = res.read()
 
