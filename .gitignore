@@ -1,2 +1,4 @@
 client_lib/__pycache__/
 conf.data
+client_lib/topics/__pycache__/OSM_NBI_Client_admin.cpython-38.pyc
+client_lib/topics/__pycache__/OSM_NBI_Client_nsd.cpython-38.pyc
