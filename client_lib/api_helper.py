@@ -28,8 +28,8 @@ class ApiRequest():
 
         try:
             resp_yaml=yaml.safe_load(data)
-
-            return resp_yaml
+            
+            return res.status, resp_yaml
         except yaml.YAMLError as exc:
             print(exc)
             return None

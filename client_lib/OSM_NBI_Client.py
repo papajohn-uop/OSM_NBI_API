@@ -53,14 +53,19 @@ class Client:
     def getNS_id(self,ns_name):
         target_ns_id=None
         response = self.nsd.getNSDs()
-        ns_desc_json=json.loads(json.dumps(response))
-        #print(json.dumps(ns_desc_json))
-        for ns_desc in ns_desc_json:
-            if ns_desc["name"]==ns_name:
-                print("NS EXISTS")
-                print(ns_desc["name"],ns_desc["_id"])
-                target_ns_id=ns_desc["_id"]
-        return target_ns_id
+        status=response[0]
+        data=response[1]
+        if status==200:
+            ns_desc_json=json.loads(json.dumps(data))
+            #print(json.dumps(ns_desc_json))
+            for ns_desc in ns_desc_json:
+                if ns_desc["name"]==ns_name:
+                    print("NS EXISTS")
+                    print(ns_desc["name"],ns_desc["_id"])
+                    target_ns_id=ns_desc["_id"]
+            return target_ns_id
+        else:
+            return False
 
 
     def get_token(self):

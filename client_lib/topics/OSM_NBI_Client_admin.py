@@ -32,7 +32,12 @@ class Admin:
         try:
         # Request a new Token
             response = self.__requestNewToken__()
-            self.configuration.token=response["id"]
+            status=response[0]
+            data=response[1]
+            if status==200:
+                self.configuration.token=data["id"]
+            else:
+                return False
         except Exception as e:
             print("Exception when calling Admin->requestNewToken: %s\n" % e)
             return False
