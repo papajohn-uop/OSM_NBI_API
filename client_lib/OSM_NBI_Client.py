@@ -44,4 +44,25 @@ class Client:
         else:
             print("No conf")
         return config
-            
+    
+    def getNSDs(self):
+        response = self.nsd.getNSDs()
+        ns_desc_json=json.loads(json.dumps(response))
+        return ns_desc_json
+
+    def getNS_id(self,ns_name):
+        target_ns_id=None
+        response = self.nsd.getNSDs()
+        ns_desc_json=json.loads(json.dumps(response))
+        #print(json.dumps(ns_desc_json))
+        for ns_desc in ns_desc_json:
+            if ns_desc["name"]==ns_name:
+                print("NS EXISTS")
+                print(ns_desc["name"],ns_desc["_id"])
+                target_ns_id=ns_desc["_id"]
+        return target_ns_id
+
+
+    def get_token(self):
+       resp=self.admin.requestNewToken()
+       return resp
