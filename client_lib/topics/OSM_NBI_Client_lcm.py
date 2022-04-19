@@ -12,12 +12,6 @@ class LCM:
     def __init__(self,configuration):
         self.configuration = configuration
         self.generic_api=None
-        # self.main_topic=None
-        # self.headers= None
-        # self.topic=None
-        # self.action=None
-        # self.payload=None
-        # self.ApiReq= None
 
 
     def __createNS_Instance__(self):
@@ -25,10 +19,6 @@ class LCM:
                                 'Authorization': 'Bearer ' + self.configuration.token 
                                 })
         self.generic_api=gen_api
-        # self.main_topic=gen_api.main_topic
-        # self.headers= gen_api.headers
-        # self.topic=gen_api.topic
-        # self.action=gen_api.action  
         self.payload=None
         self.ApiReq= api_help.ApiRequest(self.configuration,self.generic_api.headers)
         if self.generic_api.headers is None:

@@ -9,10 +9,6 @@ from  client_lib import api_helper as api_help
 class Admin:
     def __init__(self,configuration ):
         self.configuration = configuration
-        # self.headers=None
-        # self.main_topic=None
-        # self.topic=None
-        # self.payload=None
         self.ApiReq=None
         #New approach use genericapi
         self.genericApi=None
@@ -23,10 +19,6 @@ class Admin:
         gen_api=api_help.GenericApi("admin","tokens","POST",{
         'Content-Type': 'application/json'
         })
-        # self.main_topic=gen_api.main_topic
-        # self.headers= gen_api.headers
-        # self.topic=gen_api.topic
-        # self.action=gen_api.action  
         self.genericApi=gen_api
         self.ApiReq= api_help.ApiRequest(self.configuration,self.genericApi.headers)
         if self.genericApi.headers is None:
