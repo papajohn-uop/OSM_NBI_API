@@ -2,6 +2,7 @@ import json
 
 from  client_lib.topics import OSM_NBI_Client_admin as admin 
 from  client_lib.topics import OSM_NBI_Client_nsd as nsd 
+from  client_lib.topics import OSM_NBI_Client_lcm as lcm 
 
 
 class Configuration:
@@ -27,6 +28,7 @@ class Client:
         self.conf=self.__readConf__(confFile) 
         self.admin=admin.Admin(self.conf)
         self.nsd=nsd.NSD(self.conf)
+        self.lcm=lcm.LCM(self.conf)
 
     
     def __readConf__(self,confFile):

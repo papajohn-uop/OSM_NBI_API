@@ -12,10 +12,10 @@ class NSD:
     def __init__(self,configuration):
         self.configuration = configuration
         self.main_topic=None
-        self.headers= None
-        self.topic=None
-        self.action=None
-        self.payload=None
+        # self.headers= None
+        # self.topic=None
+        # self.action=None
+        # self.payload=None
         self.ApiReq= None
 
 
@@ -24,12 +24,13 @@ class NSD:
                                 'Authorization': 'Bearer ' + self.configuration.token 
                                 })
         self.main_topic=gen_api.main_topic
-        self.headers= gen_api.headers
-        self.topic=gen_api.topic
-        self.action=gen_api.action  
-        self.payload=None
-        self.ApiReq= api_help.ApiRequest(self.configuration,self.headers)
-        if self.headers is None:
+        # self.headers= gen_api.headers
+        # self.topic=gen_api.topic
+        # self.action=gen_api.action  
+        # self.payload=None
+        self.genericApi=gen_api
+        self.ApiReq= api_help.ApiRequest(self.configuration,self.genericApi.headers)
+        if self.genericApi.headers is None:
             print("Ooops")
             return None
         if self.configuration.token is None:
@@ -39,7 +40,7 @@ class NSD:
         self.payload=""
         self.topic="ns_descriptors"
 
-        return (self.ApiReq.send_request("GET",self.main_topic,self.topic,self.payload) )
+        return (self.ApiReq.send_request("GET",self.genericApi.main_topic,self.genericApi.topic,self.genericApi.payload) )
 
     def getNSDs(self):
         try:
