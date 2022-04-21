@@ -24,11 +24,13 @@ class Admin:
         if self.genericApi.headers is None:
             print("Ooops")
             return None
-        pprint("Request New Token")
+        # pprint("Request New Token")
         self.payload="{\"username\": \""+ self.configuration.username+"\",  \"password\": \""+self.configuration.password+"\"}"
         return (self.ApiReq.send_request(self.genericApi.action,self.genericApi.main_topic,self.genericApi.topic,self.payload) )
 
     def requestNewToken(self):
+        status=None
+        data=None
         try:
         # Request a new Token
             response = self.__requestNewToken__()
@@ -41,7 +43,7 @@ class Admin:
         except Exception as e:
             print("Exception when calling Admin->requestNewToken: %s\n" % e)
             return False
-        return True
+        return data
         return(self.__requestNewToken__())
 
 
@@ -60,7 +62,7 @@ class Admin:
         if self.genericApi.headers is None:
             print("Ooops")
             return None
-        pprint("Get vim_accounts")
+        #pprint("Get vim_accounts")
         # self.payload="{\"username\": \""+ self.configuration.username+"\",  \"password\": \""+self.configuration.password+"\"}"
         return (self.ApiReq.send_request(self.genericApi.action,self.genericApi.main_topic,self.genericApi.topic,self.genericApi.payload) )
 
@@ -72,7 +74,10 @@ class Admin:
         try:
         # GEt vim accounts list
             response = self.__get_VIM_accounts__()
-            return response
+            status=response[0]
+            data=response[1]
+            if status==200:
+                return response
            # self.configuration.token=response["id"]
         except Exception as e:
             print("Exception when calling Admin->requestNewToken: %s\n" % e)
