@@ -14,7 +14,7 @@ class LCM:
         self.generic_api=None
 
 
-    def __createNS_Instance__(self):
+    def __ns_instances__(self,payload):
         gen_api=api_help.GenericApi("nslcm","ns_instances","POST",{
                                 'Authorization': 'Bearer ' + self.configuration.token 
                                 })
@@ -28,7 +28,7 @@ class LCM:
             print("No authorzation")
             return None
         pprint("LCM-CREATE NS INSTANCE")
-        self.payload=dict()
+        self.payload=payload
 
         # {
         # "nsName": "my_NS_NAME",
@@ -38,23 +38,31 @@ class LCM:
 
        
         # return
-        resp= self.ApiReq.send_request(self.generic_api.action,self.generic_api.main_topic,self.generic_api.topic,self.payload)
-        # print(resp)
+ 
+        resp= self.ApiReq.send_request(self.generic_api.action,self.generic_api.main_topic,self.generic_api.topic,json.dumps(self.payload))
+        print(resp)
         # print(resp["status"])
-        if resp["status"]!=200: 
+        
+        if  "id" not in resp: 
             print("Command failed")
-            # return False
+            print(resp.status)
+            return False
+        
         return resp
 
-    def getNSDs(self):
+    def ns_instances(self,nsName,nsdID,vimAccountId):
         try:
-            # Get NSDs
-            response = self.__getNSDs__()
+            #payload
+            payload=dict()
+            payload["nsName"]=nsName
+            payload["nsdId"]=nsdID
+            payload["vimAccountId"]=vimAccountId
+            response = self.__ns_instances__(payload)
         except Exception as e:
-            print("Exception when calling NSD->getNSDs: %s\n" % e)
+            print("Exception when calling LCM->ns_instances: %s\n" % e)
             return None
 
 
-        return response
+        return response["id"]
 
 
