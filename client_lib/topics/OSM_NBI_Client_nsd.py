@@ -26,21 +26,29 @@ class NSD:
         if self.configuration.token is None:
             print("No authorzation")
             return None
-        pprint("Get NSDS")
+        # pprint("Get NSDS")
         self.payload=""
         self.topic="ns_descriptors"
-
         return (self.ApiReq.send_request("GET",self.genericApi.main_topic,self.genericApi.topic,self.genericApi.payload) )
 
     def getNSDs(self):
+        ns_descs_json=None
         try:
             # Get NSDs
             response = self.__getNSDs__()
+            status=response[0]
+            data=response[1]
+  
+            if status==200:
+                ns_descs_json=json.loads(json.dumps(data))
+                return ns_descs_json
+            else:
+                return data
         except Exception as e:
             print("Exception when calling NSD->getNSDs: %s\n" % e)
             return None
 
 
-        return response
+        # return response
 
 
